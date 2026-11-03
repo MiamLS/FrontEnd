@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +9,46 @@
     <title>Music Library</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody id="music-table">
-            <!-- Music data will be populated here -->
-        </tbody>
+    <main id="app" class="page">
+        <section class="music-library" aria-labelledby="page-title">
+            <header class="page-header">
+                <p class="eyebrow">Your collection</p>
+                <h1 id="page-title">Music Library</h1>
+                <p class="page-description">Browse your music records.</p>
+            </header>
+
+            <div class="table-container">
+                <table>
+                    <caption class="visually-hidden">Music records</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="loading">
+                            <td class="table-message" colspan="4">Loading music records...</td>
+                        </tr>
+                        <tr v-else-if="error">
+                            <td class="table-message table-error" colspan="4" role="alert">{{ error }}</td>
+                        </tr>
+                        <tr v-else-if="musicRecords.length === 0">
+                            <td class="table-message" colspan="4">No music records found.</td>
+                        </tr>
+                        <tr v-for="(record, index) in musicRecords" :key="record.id ?? index">
+                            <td class="record-title">{{ record.title }}</td>
+                            <td>{{ record.artist }}</td>
+                            <td>{{ record.duration }}</td>
+                            <td>{{ record.publicationYear }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="vue.js"></script>
 </body>
 </html>
