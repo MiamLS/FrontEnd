@@ -1,7 +1,7 @@
 const { createApp } = Vue; // Vi henter Vue-applikationen
 
         const baseurl = "https://localhost:7253/api/MusicRecord"; // Vi gemmer baseurl'en til vores REST-service i en variabel, så vi kan genbruge den flere steder i koden
-o
+
         const app = createApp({
             data() {
                 return {
