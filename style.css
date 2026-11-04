@@ -124,3 +124,43 @@ tbody tr:hover {
         padding: 14px 16px;
     }
 }
+
+
+/* Søgefelt */
+.search-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    padding: 0 36px 28px;
+}
+
+/* Inputfelter */
+.search-container input {
+    min-width: 0;
+    padding: 12px 16px;
+    border: 1px solid #e6e9f1;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Search knap */
+.search-container button {
+    padding: 12px 24px;
+    background: #6958ce;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background: #5544b5;
+}
+
+/* Mobilvisning */
+@media (max-width: 600px) {
+    .search-container {
+        grid-template-columns: 1fr;
+        padding: 0 22px 24px;
+    }
+}
