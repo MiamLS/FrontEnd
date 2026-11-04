@@ -8,6 +8,10 @@ const { createApp } = Vue; // Vi henter Vue-applikationen
                     musicRecords: [], // Vi opretter en tom array, som vi senere vil fylde med data fra vores REST-service
                     loading: false,
                     error: '',
+                    showAddForm: false,
+                    submitting: false,
+                    addError: '',
+                    successMessage: '',
                     newMusicRecord: { // Vi opretter et objekt, som vi vil bruge til at oprette nye musikrecords
                         title: "",
                         artist: "",
@@ -31,7 +35,42 @@ const { createApp } = Vue; // Vi henter Vue-applikationen
                         this.loading = false;
                     }
                 },
+                toggleAddForm() {
+                    this.showAddForm = !this.showAddForm;
+                    this.addError = '';
+                    this.successMessage = '';
+                },
+                async addMusicRecord() {
+                    this.submitting = true;
+                    this.addError = '';
+                    this.successMessage = '';
 
+                    try {
+                        await axios.post(baseurl, {
+                            ...this.newMusicRecord,
+                            publicationYear: Number(this.newMusicRecord.publicationYear),
+                        });
+
+                        this.newMusicRecord = {
+                            title: "",
+                            artist: "",
+                            duration: "",
+                            publicationYear: "",
+                        };
+                        this.showAddForm = false;
+                        await this.fetchMusicRecords();
+
+                        if (this.error) {
+                            this.successMessage = 'Record added, but the list could not be refreshed.';
+                        } else {
+                            this.successMessage = 'Music record added.';
+                        }
+                    } catch (error) {
+                        this.addError = `Could not add music record: ${error.message}`;
+                    } finally {
+                        this.submitting = false;
+                    }
+                },
             },
             mounted() {
                 this.fetchMusicRecords();

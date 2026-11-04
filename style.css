@@ -29,6 +29,80 @@ body {
     padding: 32px 36px 26px;
 }
 
+.primary-button {
+    margin-top: 20px;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #6958ce;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.primary-button:hover:not(:disabled) {
+    background: #5645b9;
+}
+
+.primary-button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.record-form {
+    padding: 24px 36px 28px;
+    border-top: 1px solid #e9ebf2;
+    background: #fbfaff;
+}
+
+.record-form h2 {
+    margin: 0 0 18px;
+    font-size: 1.15rem;
+}
+
+.form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-fields label {
+    display: grid;
+    gap: 7px;
+    color: #555b70;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-fields input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid #d9dce7;
+    border-radius: 7px;
+    color: #202438;
+    font: inherit;
+}
+
+.form-fields input:focus {
+    border-color: #6958ce;
+    outline: 2px solid rgb(105 88 206 / 18%);
+}
+
+.form-message {
+    margin: 14px 0 0;
+    font-size: 0.9rem;
+}
+
+.form-error {
+    color: #b42332;
+}
+
+.form-success {
+    color: #237a4b;
+}
+
 .eyebrow {
     margin: 0 0 8px;
     color: #6958ce;
@@ -117,6 +191,14 @@ tbody tr:hover {
 
     .page-header {
         padding: 26px 22px 22px;
+    }
+
+    .record-form {
+        padding: 22px;
+    }
+
+    .form-fields {
+        grid-template-columns: 1fr;
     }
 
     th,
