@@ -71,7 +71,7 @@
                     </label>
                 </div>
                 <p v-if="addError" class="form-message form-error" role="alert">{{ addError }}</p>
-                <button class="primary-button" type="submit" :disabled="submitting">
+                <button id="add-record-submit" class="primary-button" type="submit" :disabled="submitting">
                     {{ submitting ? 'Adding...' : 'Add record' }}
                 </button>
         </form>
