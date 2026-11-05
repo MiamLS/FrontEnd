@@ -45,7 +45,8 @@ const app = createApp({
     },
     searchRecords() {
     this.fetchMusicRecords();
-}                toggleAddForm() {
+  },
+  toggleAddForm() {
                     this.showAddForm = !this.showAddForm;
                     this.addError = '';
                     this.successMessage = '';
