@@ -45,6 +45,12 @@ body {
     background: #5645b9;
 }
 
+.primary-button:focus-visible,
+.search-container button:focus-visible {
+    outline: 3px solid rgb(105 88 206 / 35%);
+    outline-offset: 2px;
+}
+
 .primary-button:disabled {
     cursor: wait;
     opacity: 0.7;
@@ -218,15 +224,25 @@ tbody tr:hover {
 
 /* Inputfelter */
 .search-container input {
+    width: 100%;
     min-width: 0;
+    min-height: 42px;
     padding: 12px 16px;
     border: 1px solid #e6e9f1;
     border-radius: 8px;
+    color: #202438;
+    font: inherit;
     font-size: 14px;
+}
+
+.search-container input:focus {
+    border-color: #6958ce;
+    outline: 2px solid rgb(105 88 206 / 18%);
 }
 
 /* Search knap */
 .search-container button {
+    min-height: 42px;
     padding: 12px 24px;
     background: #6958ce;
     color: white;
@@ -244,5 +260,9 @@ tbody tr:hover {
     .search-container {
         grid-template-columns: 1fr;
         padding: 0 22px 24px;
+    }
+
+    .search-container button {
+        width: 100%;
     }
 }

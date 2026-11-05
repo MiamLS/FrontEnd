@@ -44,7 +44,13 @@
 
           <button type="button" @click="searchRecords">Search</button>
         </div>
-            >
+
+        <form
+          v-if="showAddForm"
+          id="add-record-form"
+          class="record-form"
+          @submit.prevent="addMusicRecord"
+        >
                 <h2>Add a music record</h2>
                 <div class="form-fields">
                     <label>
@@ -68,7 +74,7 @@
                 <button class="primary-button" type="submit" :disabled="submitting">
                     {{ submitting ? 'Adding...' : 'Add record' }}
                 </button>
-            </form>
+        </form>
 
         <div class="table-container">
           <table id="music-records-table">
