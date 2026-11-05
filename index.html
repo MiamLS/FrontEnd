@@ -55,19 +55,19 @@
                 <div class="form-fields">
                     <label>
                         Title
-                        <input v-model.trim="newMusicRecord.title" name="title" type="text" required>
+                        <input id="add-record-title" v-model.trim="newMusicRecord.title" name="title" type="text" required>
                     </label>
                     <label>
                         Artist
-                        <input v-model.trim="newMusicRecord.artist" name="artist" type="text" required>
+                        <input id="add-record-artist" v-model.trim="newMusicRecord.artist" name="artist" type="text" required>
                     </label>
                     <label>
                         Duration
-                        <input v-model.trim="newMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
+                        <input id="add-record-duration" v-model.trim="newMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
                     </label>
                     <label>
                         Year
-                        <input v-model.number="newMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
+                        <input id="add-record-year" v-model.number="newMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
                     </label>
                 </div>
                 <p v-if="addError" class="form-message form-error" role="alert">{{ addError }}</p>
