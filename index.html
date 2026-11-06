@@ -98,7 +98,7 @@
             </label>
             <label>
               Year
-              <input v-model.number="editMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
+              <input v-model.number="editMusicRecord.publicationYear" id="edit-record-year" name="publicationYear" type="number" step="1" required>
             </label>
           </div>
           <p v-if="editError" class="form-message form-error" role="alert">{{ editError }}</p>
@@ -106,7 +106,7 @@
             <button id="edit-record-submit" class="primary-button" type="submit" :disabled="updating">
               {{ updating ? 'Updating...' : 'Save changes' }}
             </button>
-            <button class="secondary-button" type="button" :disabled="updating" @click="cancelEdit">Cancel</button>
+            <button id="edit-record-cancel" class="secondary-button" type="button" :disabled="updating" @click="cancelEdit">Cancel</button>
           </div>
         </form>
 
