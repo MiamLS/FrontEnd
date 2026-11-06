@@ -15,16 +15,22 @@
           <p class="eyebrow">Your collection</p>
           <h1 id="page-title">Music Library</h1>
           <p class="page-description">Browse your music records.</p>
-                <button
-                    class="primary-button"
-                    type="button"
-                    :aria-expanded="showAddForm"
-                    aria-controls="add-record-form"
-                    @click="toggleAddForm"
-                >
-                    {{ showAddForm ? 'Cancel' : 'Add music record' }}
-                </button>
-                <p v-if="successMessage" class="form-message form-success" role="status">{{ successMessage }}</p>
+          <button
+            class="primary-button"
+            type="button"
+            :aria-expanded="showAddForm"
+            aria-controls="add-record-form"
+            @click="toggleAddForm"
+          >
+            {{ showAddForm ? 'Cancel' : 'Add music record' }}
+          </button>
+          <p
+            v-if="successMessage"
+            class="form-message form-success"
+            role="status"
+          >
+            {{ successMessage }}
+          </p>
         </header>
 
         <div class="search-container">
@@ -51,29 +57,53 @@
           class="record-form"
           @submit.prevent="addMusicRecord"
         >
-                <h2>Add a music record</h2>
-                <div class="form-fields">
-                    <label>
-                        Title
-                        <input v-model.trim="newMusicRecord.title" name="title" type="text" required>
-                    </label>
-                    <label>
-                        Artist
-                        <input v-model.trim="newMusicRecord.artist" name="artist" type="text" required>
-                    </label>
-                    <label>
-                        Duration
-                        <input v-model.trim="newMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
-                    </label>
-                    <label>
-                        Year
-                        <input v-model.number="newMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
-                    </label>
-                </div>
-                <p v-if="addError" class="form-message form-error" role="alert">{{ addError }}</p>
-                <button class="primary-button" type="submit" :disabled="submitting">
-                    {{ submitting ? 'Adding...' : 'Add record' }}
-                </button>
+          <h2>Add a music record</h2>
+          <div class="form-fields">
+            <label>
+              Title
+              <input
+                v-model.trim="newMusicRecord.title"
+                name="title"
+                type="text"
+                required
+              />
+            </label>
+            <label>
+              Artist
+              <input
+                v-model.trim="newMusicRecord.artist"
+                name="artist"
+                type="text"
+                required
+              />
+            </label>
+            <label>
+              Duration
+              <input
+                v-model.trim="newMusicRecord.duration"
+                name="duration"
+                type="text"
+                placeholder="e.g. 3:45"
+                required
+              />
+            </label>
+            <label>
+              Year
+              <input
+                v-model.number="newMusicRecord.publicationYear"
+                name="publicationYear"
+                type="number"
+                step="1"
+                required
+              />
+            </label>
+          </div>
+          <p v-if="addError" class="form-message form-error" role="alert">
+            {{ addError }}
+          </p>
+          <button class="primary-button" type="submit" :disabled="submitting">
+            {{ submitting ? 'Adding...' : 'Add record' }}
+          </button>
         </form>
 
         <div class="table-container">
@@ -87,6 +117,7 @@
                 <th id="artist-header" scope="col">Artist</th>
                 <th id="duration-header" scope="col">Duration</th>
                 <th id="year-header" scope="col">Year</th>
+                <th id="actions-header" scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -101,7 +132,7 @@
                 </td>
               </tr>
               <tr v-else-if="musicRecords.length === 0">
-                <td class="table-message" colspan="4">
+                <td class="table-message" colspan="5">
                   No music records found.
                 </td>
               </tr>
@@ -113,6 +144,15 @@
                 <td>{{ record.artist }}</td>
                 <td>{{ record.duration }}</td>
                 <td>{{ record.publicationYear }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    @click="deleteMusicRecord(record.id)"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>

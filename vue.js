@@ -8,10 +8,10 @@ const app = createApp({
       musicRecords: [], // Vi opretter en tom array, som vi senere vil fylde med data fra vores REST-service
       loading: false,
       error: "",
-                    showAddForm: false,
-                    submitting: false,
-                    addError: '',
-                    successMessage: '',
+      showAddForm: false,
+      submitting: false,
+      addError: "",
+      successMessage: "",
       searchTitle: "",
       searchArtist: "",
       newMusicRecord: {
@@ -44,44 +44,62 @@ const app = createApp({
       }
     },
     searchRecords() {
-    this.fetchMusicRecords();
-  },
-  toggleAddForm() {
-                    this.showAddForm = !this.showAddForm;
-                    this.addError = '';
-                    this.successMessage = '';
-                },
-                async addMusicRecord() {
-                    this.submitting = true;
-                    this.addError = '';
-                    this.successMessage = '';
+      this.fetchMusicRecords();
+    },
+    toggleAddForm() {
+      this.showAddForm = !this.showAddForm;
+      this.addError = "";
+      this.successMessage = "";
+    },
+    async addMusicRecord() {
+      this.submitting = true;
+      this.addError = "";
+      this.successMessage = "";
 
-                    try {
-                        await axios.post(baseurl, {
-                            ...this.newMusicRecord,
-                            publicationYear: Number(this.newMusicRecord.publicationYear),
-                        });
+      try {
+        await axios.post(baseurl, {
+          ...this.newMusicRecord,
+          publicationYear: Number(this.newMusicRecord.publicationYear),
+        });
 
-                        this.newMusicRecord = {
-                            title: "",
-                            artist: "",
-                            duration: "",
-                            publicationYear: "",
-                        };
-                        this.showAddForm = false;
-                        await this.fetchMusicRecords();
+        this.newMusicRecord = {
+          title: "",
+          artist: "",
+          duration: "",
+          publicationYear: "",
+        };
+        this.showAddForm = false;
+        await this.fetchMusicRecords();
 
-                        if (this.error) {
-                            this.successMessage = 'Record added, but the list could not be refreshed.';
-                        } else {
-                            this.successMessage = 'Music record added.';
-                        }
-                    } catch (error) {
-                        this.addError = `Could not add music record: ${error.message}`;
-                    } finally {
-                        this.submitting = false;
-                    }
-                },
+        if (this.error) {
+          this.successMessage =
+            "Record added, but the list could not be refreshed.";
+        } else {
+          this.successMessage = "Music record added.";
+        }
+      } catch (error) {
+        this.addError = `Could not add music record: ${error.message}`;
+      } finally {
+        this.submitting = false;
+      }
+    },
+
+    async deleteMusicRecord(id) {
+      // Spørg brugeren om bekræftelse
+      if (!confirm("Are you sure you want to delete this record?")) {
+        return;
+      }
+
+      try {
+        // Send DELETE-request til REST API
+        await axios.delete(`${baseurl}/${id}`);
+
+        // Opdater listen efter sletning
+        await this.fetchMusicRecords();
+      } catch (error) {
+        this.error = `Could not delete record: ${error.message}`;
+      }
+    },
   },
   mounted() {
     this.fetchMusicRecords();
