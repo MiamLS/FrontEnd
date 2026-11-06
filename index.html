@@ -86,15 +86,15 @@
           <div class="form-fields">
             <label>
               Title
-              <input v-model.trim="editMusicRecord.title" name="title" type="text" required>
+              <input v-model.trim="editMusicRecord.title" id="edit-record-title" name="title" type="text" required>
             </label>
             <label>
               Artist
-              <input v-model.trim="editMusicRecord.artist" name="artist" type="text" required>
+              <input v-model.trim="editMusicRecord.artist" id="edit-record-artist" name="artist" type="text" required>
             </label>
             <label>
               Duration
-              <input v-model.trim="editMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
+              <input v-model.trim="editMusicRecord.duration" id="edit-record-duration" name="duration" type="text" placeholder="e.g. 3:45" required>
             </label>
             <label>
               Year
@@ -103,7 +103,7 @@
           </div>
           <p v-if="editError" class="form-message form-error" role="alert">{{ editError }}</p>
           <div class="form-actions">
-            <button class="primary-button" type="submit" :disabled="updating">
+            <button id="edit-record-submit" class="primary-button" type="submit" :disabled="updating">
               {{ updating ? 'Updating...' : 'Save changes' }}
             </button>
             <button class="secondary-button" type="button" :disabled="updating" @click="cancelEdit">Cancel</button>
