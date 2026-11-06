@@ -15,22 +15,16 @@
           <p class="eyebrow">Your collection</p>
           <h1 id="page-title">Music Library</h1>
           <p class="page-description">Browse your music records.</p>
-          <button
-            class="primary-button"
-            type="button"
-            :aria-expanded="showAddForm"
-            aria-controls="add-record-form"
-            @click="toggleAddForm"
-          >
-            {{ showAddForm ? 'Cancel' : 'Add music record' }}
-          </button>
-          <p
-            v-if="successMessage"
-            class="form-message form-success"
-            role="status"
-          >
-            {{ successMessage }}
-          </p>
+                <button id="add-button"
+                    class="primary-button"
+                    type="button"
+                    :aria-expanded="showAddForm"
+                    aria-controls="add-record-form"
+                    @click="toggleAddForm"
+                >
+                    {{ showAddForm ? 'Cancel' : 'Add music record' }}
+                </button>
+                <p v-if="successMessage" class="form-message form-success" role="status">{{ successMessage }}</p>
         </header>
 
         <div class="search-container">
@@ -57,53 +51,29 @@
           class="record-form"
           @submit.prevent="addMusicRecord"
         >
-          <h2>Add a music record</h2>
-          <div class="form-fields">
-            <label>
-              Title
-              <input
-                v-model.trim="newMusicRecord.title"
-                name="title"
-                type="text"
-                required
-              />
-            </label>
-            <label>
-              Artist
-              <input
-                v-model.trim="newMusicRecord.artist"
-                name="artist"
-                type="text"
-                required
-              />
-            </label>
-            <label>
-              Duration
-              <input
-                v-model.trim="newMusicRecord.duration"
-                name="duration"
-                type="text"
-                placeholder="e.g. 3:45"
-                required
-              />
-            </label>
-            <label>
-              Year
-              <input
-                v-model.number="newMusicRecord.publicationYear"
-                name="publicationYear"
-                type="number"
-                step="1"
-                required
-              />
-            </label>
-          </div>
-          <p v-if="addError" class="form-message form-error" role="alert">
-            {{ addError }}
-          </p>
-          <button class="primary-button" type="submit" :disabled="submitting">
-            {{ submitting ? 'Adding...' : 'Add record' }}
-          </button>
+                <h2 id="add-a-music-record">Add a music record</h2>
+                <div class="form-fields">
+                    <label>
+                        Title
+                        <input id="add-record-title" v-model.trim="newMusicRecord.title" name="title" type="text" required>
+                    </label>
+                    <label>
+                        Artist
+                        <input id="add-record-artist" v-model.trim="newMusicRecord.artist" name="artist" type="text" required>
+                    </label>
+                    <label>
+                        Duration
+                        <input id="add-record-duration" v-model.trim="newMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
+                    </label>
+                    <label>
+                        Year
+                        <input id="add-record-year" v-model.number="newMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
+                    </label>
+                </div>
+                <p v-if="addError" class="form-message form-error" role="alert">{{ addError }}</p>
+                <button id="add-record-submit" class="primary-button" type="submit" :disabled="submitting">
+                    {{ submitting ? 'Adding...' : 'Add record' }}
+                </button>
         </form>
 
         <div class="table-container">
