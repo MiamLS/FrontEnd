@@ -56,6 +56,30 @@ body {
     opacity: 0.7;
 }
 
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.secondary-button {
+    margin-top: 20px;
+    padding: 11px 16px;
+    border: 1px solid #d9dce7;
+    border-radius: 8px;
+    background: #fff;
+    color: #555b70;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.secondary-button:disabled,
+.update-btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
 .record-form {
     padding: 24px 36px 28px;
     border-top: 1px solid #e9ebf2;
@@ -274,6 +298,24 @@ tbody tr:hover {
     padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.record-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.update-btn {
+    background-color: #6958ce;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.update-btn:hover {
+    background-color: #5544b5;
 }
 
 .delete-btn:hover {

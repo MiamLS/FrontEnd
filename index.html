@@ -76,6 +76,40 @@
                 </button>
         </form>
 
+        <form
+          v-if="editingRecordId !== null"
+          id="edit-record-form"
+          class="record-form"
+          @submit.prevent="updateMusicRecord"
+        >
+          <h2>Edit music record</h2>
+          <div class="form-fields">
+            <label>
+              Title
+              <input v-model.trim="editMusicRecord.title" name="title" type="text" required>
+            </label>
+            <label>
+              Artist
+              <input v-model.trim="editMusicRecord.artist" name="artist" type="text" required>
+            </label>
+            <label>
+              Duration
+              <input v-model.trim="editMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
+            </label>
+            <label>
+              Year
+              <input v-model.number="editMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
+            </label>
+          </div>
+          <p v-if="editError" class="form-message form-error" role="alert">{{ editError }}</p>
+          <div class="form-actions">
+            <button class="primary-button" type="submit" :disabled="updating">
+              {{ updating ? 'Updating...' : 'Save changes' }}
+            </button>
+            <button class="secondary-button" type="button" :disabled="updating" @click="cancelEdit">Cancel</button>
+          </div>
+        </form>
+
         <div class="table-container">
           <table id="music-records-table">
             <caption class="visually-hidden">
@@ -115,13 +149,23 @@
                 <td>{{ record.duration }}</td>
                 <td>{{ record.publicationYear }}</td>
                 <td>
-                  <button
-                    type="button"
-                    class="delete-btn"
-                    @click="deleteMusicRecord(record.id)"
-                  >
-                    Delete
-                  </button>
+                  <div class="record-actions">
+                    <button
+                      type="button"
+                      class="update-btn"
+                      :disabled="updating"
+                      @click="editMusicRecordFor(record)"
+                    >
+                      Update
+                    </button>
+                    <button
+                      type="button"
+                      class="delete-btn"
+                      @click="deleteMusicRecord(record.id)"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>

@@ -11,6 +11,15 @@ const app = createApp({
       showAddForm: false,
       submitting: false,
       addError: "",
+      editingRecordId: null,
+      editMusicRecord: {
+        title: "",
+        artist: "",
+        duration: "",
+        publicationYear: "",
+      },
+      editError: "",
+      updating: false,
       successMessage: "",
       searchTitle: "",
       searchArtist: "",
@@ -48,8 +57,54 @@ const app = createApp({
     },
     toggleAddForm() {
       this.showAddForm = !this.showAddForm;
+      if (this.showAddForm) {
+        this.cancelEdit();
+      }
       this.addError = "";
       this.successMessage = "";
+    },
+    editMusicRecordFor(record) {
+      this.showAddForm = false;
+      this.editingRecordId = record.id;
+      this.editMusicRecord = {
+        title: record.title,
+        artist: record.artist,
+        duration: record.duration,
+        publicationYear: record.publicationYear,
+      };
+      this.editError = "";
+      this.successMessage = "";
+    },
+    cancelEdit() {
+      this.editingRecordId = null;
+      this.editError = "";
+    },
+    async updateMusicRecord() {
+      this.updating = true;
+      this.editError = "";
+      this.successMessage = "";
+
+      try {
+        await axios.put(`${baseurl}/${this.editingRecordId}`, {
+          id: this.editingRecordId,
+          ...this.editMusicRecord,
+          publicationYear: Number(this.editMusicRecord.publicationYear),
+        });
+
+        this.cancelEdit();
+        await this.fetchMusicRecords();
+
+        if (this.error) {
+          this.successMessage =
+            "Record updated, but the list could not be refreshed.";
+        } else {
+          this.successMessage = "Music record updated.";
+        }
+      } catch (error) {
+        this.editError = `Could not update music record: ${error.message}`;
+      } finally {
+        this.updating = false;
+      }
     },
     async addMusicRecord() {
       this.submitting = true;
