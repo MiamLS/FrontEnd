@@ -10,170 +10,22 @@
   </head>
   <body>
     <main id="app" class="page">
-      <section class="music-library" aria-labelledby="page-title">
-        <header class="page-header">
-          <p class="eyebrow">Your collection</p>
-          <h1 id="page-title">Music Library</h1>
-          <p class="page-description">Browse your music records.</p>
-                <button id="add-button"
-                    class="primary-button"
-                    type="button"
-                    :aria-expanded="showAddForm"
-                    aria-controls="add-record-form"
-                    @click="toggleAddForm"
-                >
-                    {{ showAddForm ? 'Cancel' : 'Add music record' }}
-                </button>
-                <p v-if="successMessage" class="form-message form-success" role="status">{{ successMessage }}</p>
-        </header>
-
-        <div class="search-container">
-          <input
-            type="text"
-            id="search-title"
-            v-model="searchTitle"
-            placeholder="Search by title"
-          />
-
-          <input
-            type="text"
-            id="search-artist"
-            v-model="searchArtist"
-            placeholder="Search by artist"
-          />
-
-          <button type="button" @click="searchRecords">Search</button>
-        </div>
-
-        <form
-          v-if="showAddForm"
-          id="add-record-form"
-          class="record-form"
-          @submit.prevent="addMusicRecord"
-        >
-                <h2 id="add-a-music-record">Add a music record</h2>
-                <div class="form-fields">
-                    <label>
-                        Title
-                        <input id="add-record-title" v-model.trim="newMusicRecord.title" name="title" type="text" required>
-                    </label>
-                    <label>
-                        Artist
-                        <input id="add-record-artist" v-model.trim="newMusicRecord.artist" name="artist" type="text" required>
-                    </label>
-                    <label>
-                        Duration
-                        <input id="add-record-duration" v-model.trim="newMusicRecord.duration" name="duration" type="text" placeholder="e.g. 3:45" required>
-                    </label>
-                    <label>
-                        Year
-                        <input id="add-record-year" v-model.number="newMusicRecord.publicationYear" name="publicationYear" type="number" step="1" required>
-                    </label>
-                </div>
-                <p v-if="addError" class="form-message form-error" role="alert">{{ addError }}</p>
-                <button id="add-record-submit" class="primary-button" type="submit" :disabled="submitting">
-                    {{ submitting ? 'Adding...' : 'Add record' }}
-                </button>
-        </form>
-
-        <form
-          v-if="editingRecordId !== null"
-          id="edit-record-form"
-          class="record-form"
-          @submit.prevent="updateMusicRecord"
-        >
-          <h2>Edit music record</h2>
-          <div class="form-fields">
-            <label>
-              Title
-              <input v-model.trim="editMusicRecord.title" id="edit-record-title" name="title" type="text" required>
-            </label>
-            <label>
-              Artist
-              <input v-model.trim="editMusicRecord.artist" id="edit-record-artist" name="artist" type="text" required>
-            </label>
-            <label>
-              Duration
-              <input v-model.trim="editMusicRecord.duration" id="edit-record-duration" name="duration" type="text" placeholder="e.g. 3:45" required>
-            </label>
-            <label>
-              Year
-              <input v-model.number="editMusicRecord.publicationYear" id="edit-record-year" name="publicationYear" type="number" step="1" required>
-            </label>
-          </div>
-          <p v-if="editError" class="form-message form-error" role="alert">{{ editError }}</p>
-          <div class="form-actions">
-            <button id="edit-record-submit" class="primary-button" type="submit" :disabled="updating">
-              {{ updating ? 'Updating...' : 'Save changes' }}
-            </button>
-            <button id="edit-record-cancel" class="secondary-button" type="button" :disabled="updating" @click="cancelEdit">Cancel</button>
-          </div>
-        </form>
-
-        <div class="table-container">
-          <table id="music-records-table">
-            <caption class="visually-hidden">
-              Music records
-            </caption>
-            <thead>
-              <tr>
-                <th id="title-header" scope="col">Title</th>
-                <th id="artist-header" scope="col">Artist</th>
-                <th id="duration-header" scope="col">Duration</th>
-                <th id="year-header" scope="col">Year</th>
-                <th id="actions-header" scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-if="loading">
-                <td class="table-message" colspan="4">
-                  Loading music records...
-                </td>
-              </tr>
-              <tr v-else-if="error">
-                <td class="table-message table-error" colspan="4" role="alert">
-                  {{ error }}
-                </td>
-              </tr>
-              <tr v-else-if="musicRecords.length === 0">
-                <td class="table-message" colspan="5">
-                  No music records found.
-                </td>
-              </tr>
-              <tr
-                v-for="(record, index) in musicRecords"
-                :key="record.id ?? index"
-              >
-                <td class="record-title">{{ record.title }}</td>
-                <td>{{ record.artist }}</td>
-                <td>{{ record.duration }}</td>
-                <td>{{ record.publicationYear }}</td>
-                <td>
-                  <div class="record-actions">
-                    <button
-                      type="button"
-                      id="update-record-button"
-                      class="update-btn"
-                      :disabled="updating"
-                      @click="editMusicRecordFor(record)"
-                    >
-                      Update
-                    </button>
-                    <button
-                      type="button"
-                      class="delete-btn"
-                      @click="deleteMusicRecord(record.id)"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <login-component
+        v-if="showLogin && !isAuthenticated"
+        @logged-in="handleLogin"
+        @cancel="closeLogin"
+      ></login-component>
+      <music-record-component
+        v-if="!showLogin || isAuthenticated"
+        :auth-token="authToken"
+        :is-authenticated="isAuthenticated"
+        @login="openLogin"
+        @logout="logout"
+      ></music-record-component>
     </main>
+    <script src="app-config.js"></script>
+    <script src="login-component.js"></script>
+    <script src="music-record-component.js"></script>
     <script src="vue.js"></script>
   </body>
 </html>
