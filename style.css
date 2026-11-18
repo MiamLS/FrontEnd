@@ -458,7 +458,18 @@ body {
 }
 
 .header-content {
+    position: relative;
+    z-index: 1;
     align-items: flex-start;
+}
+
+.archive-art {
+    position: absolute;
+    right: 34px;
+    bottom: -28px;
+    width: 250px;
+    opacity: 0.88;
+    pointer-events: none;
 }
 
 .login-button {
@@ -592,6 +603,13 @@ tbody tr:hover {
     .page-header::after {
         right: 24px;
         bottom: 22px;
+    }
+
+    .archive-art {
+        right: 12px;
+        bottom: -12px;
+        width: 145px;
+        opacity: 0.32;
     }
 
     .search-container {

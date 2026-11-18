@@ -1,23 +1,68 @@
 const { createApp } = Vue;
+const { createRouter, createWebHashHistory } = VueRouter;
+
+const session = Vue.reactive({
+  isAuthenticated: false,
+  authToken: "",
+});
+
+const MusicArchiveView = {
+  components: { MusicRecordComponent },
+  template: `
+    <music-record-component
+      :auth-token="session.authToken"
+      :is-authenticated="session.isAuthenticated"
+      @login="$router.push('/login')"
+      @logout="logout"
+    ></music-record-component>
+  `,
+  setup() {
+    const router = VueRouter.useRouter();
+
+    return {
+      session,
+      logout() {
+        session.authToken = "";
+        session.isAuthenticated = false;
+        router.push("/");
+      },
+    };
+  },
+};
+
+const LoginView = {
+  components: { LoginComponent },
+  template: `
+    <login-component
+      @logged-in="handleLogin"
+      @cancel="$router.push('/')"
+    ></login-component>
+  `,
+  setup() {
+    const router = VueRouter.useRouter();
+
+    return {
+      handleLogin(token) {
+        session.authToken = token;
+        session.isAuthenticated = true;
+        router.push("/");
+      },
+    };
+  },
+};
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    { path: "/", component: MusicArchiveView },
+    { path: "/login", component: LoginView },
+  ],
+});
 
 createApp({
-  data() {
-    return { isAuthenticated: false, authToken: "", showLogin: false };
+  setup() {
+    return { session };
   },
-  methods: {
-    openLogin() { this.showLogin = true; },
-    closeLogin() { this.showLogin = false; },
-    handleLogin(token) {
-      this.authToken = token;
-      this.isAuthenticated = true;
-      this.showLogin = false;
-    },
-    logout() {
-      this.authToken = "";
-      this.isAuthenticated = false;
-      this.showLogin = false;
-    },
-  },
-}).component("login-component", LoginComponent)
-  .component("music-record-component", MusicRecordComponent)
+})
+  .use(router)
   .mount("#app");

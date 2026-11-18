@@ -5,23 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Music Library</title>
+    <title>DR Musikarkiv</title>
   </head>
   <body>
     <main id="app" class="page">
-      <login-component
-        v-if="showLogin && !isAuthenticated"
-        @logged-in="handleLogin"
-        @cancel="closeLogin"
-      ></login-component>
-      <music-record-component
-        v-if="!showLogin || isAuthenticated"
-        :auth-token="authToken"
-        :is-authenticated="isAuthenticated"
-        @login="openLogin"
-        @logout="logout"
-      ></music-record-component>
+      <router-view></router-view>
     </main>
     <script src="app-config.js"></script>
     <script src="login-component.js"></script>

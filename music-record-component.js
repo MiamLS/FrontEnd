@@ -11,6 +11,7 @@ const MusicRecordComponent = {
           <button v-if="isAuthenticated" class="secondary-button logout-button" type="button" @click="$emit('logout')">Log ud</button>
           <button v-else class="login-button" type="button" @click="$emit('login')">Log ind</button>
         </div>
+        <img class="archive-art" src="archive-hero.svg" alt="" aria-hidden="true">
         <button v-if="isAuthenticated" class="primary-button" type="button" :aria-expanded="showAddForm" @click="toggleAddForm">{{ showAddForm ? 'Cancel' : 'Add music record' }}</button>
         <p v-if="successMessage" class="form-message form-success" role="status">{{ successMessage }}</p>
       </header>
